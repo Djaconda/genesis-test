@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+use core\console\Application;
+
+$rootPath = dirname(__DIR__);
+
+require($rootPath . '/vendor/autoload.php');
+require($rootPath . '/core/AppLoader.php');
+$configManager = core\AppLoader::getInstance();
+
+$application = $configManager->loadApplicationForSection('console', Application::class);
+$exitCode = $application->run();
+exit($exitCode);

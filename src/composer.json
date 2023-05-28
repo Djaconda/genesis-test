@@ -1,0 +1,83 @@
+{
+    "name": "genesis/edication",
+    "description": "Genesis Test Application",
+    "type": "project",
+    "license": "proprietary",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Djaconda/code-specs.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Djaconda/yii2-domain.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/spawnia/phpunit-arraysubset-asserts.git"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "bizley/jwt": "^4.1",
+        "guzzlehttp/guzzle": "^7.6",
+        "php-kitchen/yii2-di": "^0.2",
+        "php-kitchen/yii2-domain": "dev-master",
+        "psr/http-message": "^1.1",
+        "thamtech/yii2-ratelimiter-advanced": "^0.5.0",
+        "yii2tech/ar-role": "^1.0",
+        "yii2tech/https": "^1.0",
+        "yiisoft/yii2": "^2.0",
+        "yiisoft/yii2-symfonymailer": "^3.0"
+    },
+    "require-dev": {
+        "dms/phpunit-arraysubset-asserts": "dev-support-phpunit-10",
+        "kint-php/kint": "^5.0.1",
+        "php-kitchen/code-specs": "^4.0.4",
+        "phpunit/phpunit": "^10.1",
+        "rector/rector": "^0.16",
+        "roave/security-advisories": "dev-master",
+        "yiisoft/yii2-debug": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rate\\": "common/modules/Rate/",
+            "api\\": "api/",
+            "core\\": "core/",
+            "common\\": "common/",
+            "console\\": "console/",
+            "frontend\\": "frontend/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "tests"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.2"
+        },
+        "sort-packages": true,
+        "process-timeout": 1800,
+        "allow-plugins": {
+            "phing/phing-composer-configurator": true,
+            "yiisoft/yii2-composer": true
+        }
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "composer.local.json"
+            ],
+            "recurse": true,
+            "replace": false,
+            "ignore-duplicates": false,
+            "merge-dev": true,
+            "merge-extra": false,
+            "merge-extra-deep": false,
+            "merge-scripts": false
+        }
+    }
+}

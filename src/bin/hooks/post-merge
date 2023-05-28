@@ -1,0 +1,19 @@
+#/usr/bin/env bash
+
+# git hook to run a command after `git pull` if a specified file was changed
+# Put hook into `.git/hooks/` (`cp post-merge ../../.git/hooks/post-merge` #from current directory).
+# Then run `chmod +x ../../.git/hooks/post-merge` to make it executable
+
+changedFiles="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+ifFileChangedRunCommand() {
+	echo "$changedFiles" | grep --quiet "$1" && eval "$2"
+}
+
+# Example:
+# In this example it's used to run `yarn install` if `package.json` changed and
+# `composer install` if `composer.json` changed.
+
+ifFileChangedRunCommand package.json "yarn install"
+ifFileChangedRunCommand composer.json "composer install"
+gulp compile-scss

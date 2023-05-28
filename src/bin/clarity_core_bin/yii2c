@@ -1,0 +1,48 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+parent_dir=$(dirname "${DIR}" )
+
+if ! options=$(getopt -o abh: -l all,branch,host,interactive: -- "$@")
+then
+    exit 1
+fi
+
+while [[ $# -gt 0 ]]
+do
+    case $1 in
+    -a|--all)
+      mapfile -t configs < <( find ${parent_dir}/build/*/config/instance -maxdepth 1 -mindepth 1 -type d )
+      ;;
+    -b|--branch)
+       string=$2
+       branches=(${string//\// })
+       shift
+       for i in "${!branches[@]}"
+       do
+         mapfile -t confs < <( find ${parent_dir}/build/${branches[i]}/config/instance -maxdepth 1 -mindepth 1 -type d )
+         configs=( "${configs[@]}" "${confs[@]}" )
+       done
+       ;;
+    -h|--host)
+       string=$2
+       hosts=(${string//\// })
+       for i in "${!hosts[@]}"
+       do
+         mapfile -t confs < <( find ${parent_dir}/build/*/config/instance/${hosts[i]} -maxdepth 0 -type d )
+         configs=( "${configs[@]}" "${confs[@]}" )
+       done
+       shift
+       ;;
+    (*) break;;
+    esac
+    shift
+done
+
+
+for instance in "${configs[@]}"
+do
+   host=$(basename "$instance" )
+   branch=$(basename $(dirname $(dirname $(dirname "$instance" ) ) ) )
+   cd ${parent_dir}/build/${branch}
+   /usr/bin/php bin/yiic -h${host} $*
+done

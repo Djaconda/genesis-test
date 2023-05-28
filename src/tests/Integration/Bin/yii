@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+use core\console\Application;
+
+$rootPath = dirname(__DIR__, 3);
+require($rootPath . '/vendor/autoload.php');
+require($rootPath . '/core/AppLoader.php');
+$configManager = core\AppLoader::getInstance();
+
+$application = $configManager->loadApplicationForSection('console', Application::class, false, [
+    dirname(__DIR__) . '/Config/main.php',
+    dirname(__DIR__) . '/Config/main-local.php',
+]);
+Yii::setAlias('@Test', dirname(__DIR__));
+Yii::setAlias('@Fixture', dirname(__DIR__, 2) . '/Fixture');
+$exitCode = $application->run();
+exit($exitCode);

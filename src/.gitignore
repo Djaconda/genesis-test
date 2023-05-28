@@ -1,0 +1,40 @@
+# Node erros
+npm-debug.log
+yarn-error.log
+
+# phpstorm project files
+.idea
+.fleet
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# linux cache
+.directory
+
+# windows thumbnail cache
+Thumbs.db
+
+# Mac DS_Store Files
+.DS_Store
+
+# composer vendor dir
+vendor/*
+
+# composer itself is not needed
+composer.phar
+
+# node modules dir
+node_modules
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+phpunit.xml
+
+data

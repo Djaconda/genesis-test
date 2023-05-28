@@ -1,0 +1,7 @@
+bootstrap-local.php
+bootstrap.php
+main-local.php
+params-local.php
+bim_jwt_public_key_client.pem
+jwtRS256.key
+jwtRS256.key.pub

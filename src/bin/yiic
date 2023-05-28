@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+use core\console\Application;
+
+$rootPath = dirname(__DIR__);
+
+echo "\e[91mThe yii + smarty section will be removed. \nPlease refactoring!" . PHP_EOL;
+die;
+
+require($rootPath . '/vendor/autoload.php');
+require($rootPath . '/core/AppLoader.php');
+
+$configManager = core\AppLoader::getInstance();
+$application = $configManager->loadApplicationForSection('console', Application::class, $rootPath . '/frontend/web/protected/framework/Yii.php', [
+    [
+        'name' => 'old-yii.php',
+        'section' => 'console',
+    ],
+]);
+$localConfig = $configManager->loadInstanceConfig('old/local.php', 'common');
+$config = require_once($rootPath . '/frontend/web/protected/config/console.php');
+// Smarty configuration
+Yii::createConsoleApplication($config);
+$exitCode = $application->run();
+exit($exitCode);

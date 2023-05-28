@@ -1,0 +1,54 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ./docker/apache/
+      dockerfile: httpd.dockerfile
+    container_name: ${PROJECT_NAME}-httpd
+    volumes:
+      - "./src:/app"
+      - "./data/apache/logs/:/usr/local/apache2/logs/"
+    env_file:
+      - ".env"
+    restart: unless-stopped
+  php-fpm:
+    build:
+      context: ./docker/php/
+      dockerfile: php-fpm.dockerfile
+    container_name: ${PROJECT_NAME}-php
+    image: php:${PROJECT_NAME}
+    restart: unless-stopped
+    user: ${USER_ID}:${GROUP_ID}
+    environment:
+      XDEBUG: ${XDEBUG_FPM_ENABLED}
+      XDEBUG_CONFIG: client_host=${XDEBUG_REMOTE_HOST} client_port=${XDEBUG_STORM_PORT}
+      PHP_IDE_CONFIG: serverName=${HOST_NAME}
+    env_file:
+      - .env
+    volumes:
+      - "./src:/app"
+      - "./docker/php/etc/php.ini:/usr/local/etc/php/conf.d/zz-php.ini"
+    working_dir: /app
+  php-cli:
+    build:
+      context: ./docker/php/
+      dockerfile: php-cli.dockerfile
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
+        USER_NAME: ${USER_NAME}
+        GROUP_NAME: ${GROUP_NAME}
+        FULL_NAME: ${FULL_NAME}
+        EMAIL: ${EMAIL}
+        PROJECT_NAME: ${PROJECT_NAME}
+    user: "${USER_ID}:${GROUP_ID}"
+    container_name: ${PROJECT_NAME}-php-cli
+    image: php:${PROJECT_NAME}-cli
+    environment:
+      XDEBUG: ${XDEBUG_CLI_ENABLED}
+    env_file:
+      - .env
+    volumes:
+      - "./src:/app"
+    working_dir: /app
+
