@@ -9,8 +9,8 @@ use yii\web\ConflictHttpException;
  *
  * @author Dmitry Bukavin <4o.djaconda@gmail.com>
  */
-final readonly class SubcriptionManager {
-    public function __construct(private SubcriptionStore $store) {
+final readonly class SubscriptionManager {
+    public function __construct(private SubscriptionStore $store) {
     }
 
     public function addEmail(string $email): bool {

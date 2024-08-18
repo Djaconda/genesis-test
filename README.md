@@ -18,8 +18,8 @@ Requirements `docker`, `docker-compose`, `make`.
 CONFIGURATION
 -------------
 
-Cange file `docker-compose.override.yml`
-Cange file `.env`
+Change file `docker-compose.override.yml`
+Change file `.env`
 
 INSTALLATION
 ------------

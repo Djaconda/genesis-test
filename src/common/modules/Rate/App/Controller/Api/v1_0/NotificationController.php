@@ -7,7 +7,7 @@ use core\api\rest\BaseRestApiController;
 use core\filters\CorsConfigTrait;
 use Rate\Domain\Service\Notification\Notifier;
 use Rate\Domain\Service\Rate\RateManager;
-use Rate\Domain\Service\Subscription\SubcriptionManager;
+use Rate\Domain\Service\Subscription\SubscriptionManager;
 
 /**
  * Represents actions for Notification endpoint
@@ -22,7 +22,7 @@ final class NotificationController extends BaseRestApiController {
 
     public function actionNotify(): void {
         $rate = $this->container->create(RateManager::class)->getCurrent();
-        $manager = $this->container->create(SubcriptionManager::class);
+        $manager = $this->container->create(SubscriptionManager::class);
         $notifier = $this->container->create(Notifier::class);
 
         $notifier->notify($manager->getEmails(), $rate);

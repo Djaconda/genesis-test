@@ -27,7 +27,9 @@ DESCRIPTION
 
 `/rate` endpoint return preloaded data from the [Coingecko](https://api.coingecko.com)
 
-The cosole command will update the rate per hour by cron
+The console command will update the rate per hour by cron
+
+Please don't pay attention to the `core` directory, it's a part of the framework.
 
 ~~~
 0 * * * * bin/yii rate/rate/refresh

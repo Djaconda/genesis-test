@@ -4,7 +4,6 @@ namespace core;
 
 use core\frontend\Application;
 use Exception;
-use RuntimeException;
 use SplFileInfo;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -41,12 +40,6 @@ use yii\helpers\ArrayHelper;
  * @author Dmitry Bukavin <4o.djaconda@gmail.com>
  */
 class AppLoader {
-    public const REQUIRED_TMP_DIRECTORIES = [
-        'runtime',
-        'templates_compiled',
-        'cache',
-        'runtime/cache',
-    ];
     /**
      * @var string path to the root directory of the application where all of the sections stays.
      */
@@ -97,24 +90,8 @@ class AppLoader {
 
         $config = $this->loadAppConfigForSection($section, $additionalConfigs);
 
-        $this->ensureTmpDirectoriesExist();
 
         return Yii::createObject($application, [$config]);
-    }
-
-    protected function ensureTmpDirectoriesExist() {
-        $tmpPath = Yii::getAlias('@tmp');
-        if ($tmpPath) {
-            if (!file_exists($tmpPath) && !mkdir($tmpPath) && !is_dir($tmpPath)) {
-                throw new RuntimeException(sprintf('Directory "%s" was not created', $tmpPath));
-            }
-            foreach (self::REQUIRED_TMP_DIRECTORIES as $requiredDir) {
-                $fullPath = $tmpPath . DIRECTORY_SEPARATOR . $requiredDir;
-                if (!file_exists($fullPath) && !mkdir($fullPath) && !is_dir($fullPath)) {
-                    throw new RuntimeException(sprintf('Directory "%s" was not created', $fullPath));
-                }
-            }
-        }
     }
 
     protected function loadAppConfigForSection($section, array $additionalConfigs = []) {

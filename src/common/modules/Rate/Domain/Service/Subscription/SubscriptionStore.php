@@ -10,18 +10,18 @@ use Yii;
 use yii\web\ServerErrorHttpException;
 
 /**
- * Represents sevice for keeping Subscription data
+ * Represents a service for keeping Subscription data
  *
  * @author Dmitry Bukavin <4o.djaconda@gmail.com>
  */
-final readonly class SubcriptionStore {
+final readonly class SubscriptionStore {
     private string $emailBucket;
 
     public function __construct() {
         $this->emailBucket = Yii::getAlias('@data') . DIRECTORY_SEPARATOR . 'emails';
     }
 
-    public function add(string $email) {
+    public function add(string $email): false|int {
         return file_put_contents($this->getFilePathByEmail($email), '', LOCK_EX);
     }
 
@@ -30,7 +30,6 @@ final readonly class SubcriptionStore {
     }
 
     public function getList(): iterable {
-        $list = [];
         $directory = Yii::getAlias('@data/emails');
 
         $iterator = new RecursiveIteratorIterator(
@@ -41,11 +40,9 @@ final readonly class SubcriptionStore {
         /** @var SplFileInfo $file */
         foreach ($iterator as $file) {
             if ($file->isFile()) {
-                $list[] = $file->getFilename();
+                yield $file->getFilename();
             }
         }
-
-        return array_unique($list); //@TODO try to use iterator
     }
 
     private function getFilePathByEmail(string $email): string {
@@ -65,7 +62,7 @@ final readonly class SubcriptionStore {
         return implode(DIRECTORY_SEPARATOR, array_filter([$this->emailBucket, $domain]));
     }
 
-    private function createSubFolder(string $directory) {
+    private function createSubFolder(string $directory): void {
         if (!mkdir($directory, 0755) && !is_dir($directory)) {
             throw new ServerErrorHttpException(sprintf('Directory "%s" was not created', $directory));
         }

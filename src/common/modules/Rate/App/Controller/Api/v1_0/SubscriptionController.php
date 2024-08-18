@@ -5,7 +5,7 @@ namespace Rate\App\Controller\Api\v1_0;
 use core\api\rest\ApiVersionTrait;
 use core\api\rest\BaseRestApiController;
 use core\filters\CorsConfigTrait;
-use Rate\Domain\Service\Subscription\SubcriptionManager;
+use Rate\Domain\Service\Subscription\SubscriptionManager;
 use Rate\Domain\Service\Subscription\SubscriptionModel;
 use yii\web\BadRequestHttpException;
 
@@ -27,6 +27,6 @@ final class SubscriptionController extends BaseRestApiController {
             throw new BadRequestHttpException('Invalid email');
         }
 
-        $this->container->create(SubcriptionManager::class)->addEmail($form->email);
+        $this->container->create(SubscriptionManager::class)->addEmail($form->email);
     }
 }
