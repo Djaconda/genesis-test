@@ -12,10 +12,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/Djaconda/yii2-domain.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/spawnia/phpunit-arraysubset-asserts.git"
         }
     ],
     "require": {
@@ -32,7 +28,6 @@
         "yiisoft/yii2-symfonymailer": "^3.0"
     },
     "require-dev": {
-        "dms/phpunit-arraysubset-asserts": "dev-support-phpunit-10",
         "kint-php/kint": "^5.0.1",
         "php-kitchen/code-specs": "^4.0.4",
         "phpunit/phpunit": "^10.1",

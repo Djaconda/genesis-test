@@ -30,7 +30,7 @@ ci: -genesis-composer-install
 	@docker-compose down -v --remove-orphans
 
 -docker-build: -ensureRequirements
-	@docker-compose build --force
+	@docker-compose build --no-cache
 
 -docker-pre-permission:
 	sudo chown ${USER_ID}:${GROUP_ID} -R src/

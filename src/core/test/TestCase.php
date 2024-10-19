@@ -24,7 +24,6 @@ use yii\test\FixtureTrait;
  * @mixin TesterInitialization;
  */
 class TestCase extends \PHPUnit\Framework\TestCase {
-    use ArraySubsetAsserts;
     use FixtureTrait;
     use FakerTrait;
     use ServiceLocatorAccess;
